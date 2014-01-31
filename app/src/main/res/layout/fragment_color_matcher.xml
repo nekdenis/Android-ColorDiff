@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.github.nekdenis.fragment.ColorMatcherFragment">
+
+    <View
+        android:id="@+id/color_matcher_middle_view"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"/>
+
+    <View
+        android:id="@+id/color_matcher_left_square"
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:layout_toLeftOf="@+id/color_matcher_middle_view"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="25dp"/>
+
+    <View
+        android:id="@+id/color_matcher_right_square"
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:layout_toRightOf="@+id/color_matcher_middle_view"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="25dp"/>
+
+    <SeekBar
+        android:id="@+id/color_matcher_light_controller"
+        android:layout_below="@+id/color_matcher_left_square"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"/>
+
+    <SeekBar
+        android:id="@+id/color_matcher_a_controller"
+        android:layout_below="@+id/color_matcher_light_controller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"/>
+
+    <SeekBar
+        android:id="@+id/color_matcher_b_controller"
+        android:layout_below="@+id/color_matcher_a_controller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"/>
+
+    <Button
+        android:id="@+id/color_matcher_button_dec_a"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_toLeftOf="@+id/color_matcher_middle_view"
+        android:layout_marginRight="75dp"
+        android:layout_below="@+id/color_matcher_light_controller"
+        android:text="-"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/color_matcher_button_inc_a"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_toRightOf="@+id/color_matcher_middle_view"
+        android:layout_marginLeft="75dp"
+        android:layout_below="@+id/color_matcher_light_controller"
+        android:text="+"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/color_matcher_finish_button"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:text="@string/button_finish"/>
+
+</RelativeLayout>
