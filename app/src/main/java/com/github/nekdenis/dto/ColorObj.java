@@ -11,11 +11,11 @@ public class ColorObj implements Serializable {
 
     private String id;
 
-    private int l;
-    private int a;
-    private int b;
+    private double l;
+    private double a;
+    private double b;
 
-    public ColorObj(String id, int l, int a, int b) {
+    public ColorObj(String id, double l, double a, double b) {
         this.id = id;
         this.l = l;
         this.a = a;
@@ -24,20 +24,29 @@ public class ColorObj implements Serializable {
 
     public ColorObj(String id, ColorObj colorObj) {
         this.id = id;
-        int[] lab = colorObj.getLAB();
+        double[] lab = colorObj.getLAB();
         this.l = lab[0];
         this.a = lab[1];
         this.b = lab[2];
     }
 
     /**
-     * get color presented in LAB
+     * get color presented in CIE LAB
      *
      * @return l-a-b array
      */
-    public int[] getLAB() {
-        int[] result = {l, a, b};
+    public double[] getLAB() {
+        double[] result = {l, a, b};
         return result;
+    }
+
+    /**
+     * get color presented in CIE LCH
+     *
+     * @return l-a-b array
+     */
+    public double[] getLCH() {
+        return ColorConverter.LABtoLCH(l, a, b);
     }
 
     /**
@@ -63,11 +72,11 @@ public class ColorObj implements Serializable {
         return 0xFF000000 | rgb[0] | rgb[1] | rgb[2]; //0xFF000000 for 100% Alpha. Bitwise OR everything together.
     }
 
-    public int getL() {
+    public double getL() {
         return l;
     }
 
-    public int getA() {
+    public double getA() {
         return a;
     }
 
@@ -75,7 +84,7 @@ public class ColorObj implements Serializable {
         this.a = a;
     }
 
-    public int getB() {
+    public double getB() {
         return b;
     }
 

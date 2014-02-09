@@ -166,7 +166,20 @@ public class ColorConverter {
      * @return RGB values
      */
     public static int[] LABtoRGB(double l, double a, double b) {
-        return XYZtoRGB(LABtoXYZ(l, a, b));
+        return XYZtoRGB(LABtoXYZ(l, a, b, D65));
+    }
+
+    /**
+     * Convert LAB to RGB.
+     *
+     * @param l
+     * @param a
+     * @param b
+     * @param whitePoint - value of white point (D50, D65)
+     * @return RGB values
+     */
+    public static int[] LABtoRGB(double l, double a, double b, double[] whitePoint) {
+        return XYZtoRGB(LABtoXYZ(l, a, b, whitePoint));
     }
 
 
@@ -179,7 +192,7 @@ public class ColorConverter {
      * @return XYZ values
      * @see {@link http://rsb.info.nih.gov/ij/plugins/download/Color_Space_Converter.java}
      */
-    public static double[] LABtoXYZ(double L, double a, double b) {
+    public static double[] LABtoXYZ(double L, double a, double b, double[] whitePoint) {
         double[] result = new double[3];
 
         double y = (L + 16.0) / 116.0;
@@ -318,4 +331,112 @@ public class ColorConverter {
         return result;
     }
 
+    public static int[] LABtoRGBII(double L, double a, double b) {
+
+        double X, Y, Z;
+        double R, G, B;
+
+        // Lab -> normalized XYZ (X,Y,Z are all in 0...1)
+
+        Y = L * (1.0 / 116.0) + 16.0 / 116.0;
+        X = a * (1.0 / 500.0) + Y;
+        Z = b * (-1.0 / 200.0) + Y;
+
+        X = X > 6.0 / 29.0 ? X * X * X : X * (108.0 / 841.0) - 432.0 / 24389.0;
+        Y = L > 8.0 ? Y * Y * Y : L * (27.0 / 24389.0);
+        Z = Z > 6.0 / 29.0 ? Z * Z * Z : Z * (108.0 / 841.0) - 432.0 / 24389.0;
+
+        // normalized XYZ -> linear sRGB (in 0...1)
+
+        R = X * (1219569.0 / 395920.0) + Y * (-608687.0 / 395920.0) + Z * (-107481.0 / 197960.0);
+        G = X * (-80960619.0 / 87888100.0) + Y * (82435961.0 / 43944050.0) + Z * (3976797.0 / 87888100.0);
+        B = X * (93813.0 / 1774030.0) + Y * (-180961.0 / 887015.0) + Z * (107481.0 / 93370.0);
+
+        // linear sRGB -> gamma-compressed sRGB (in 0...1)
+
+        R = R > 0.0031308 ? Math.pow(R, 1.0 / 2.4) * 1.055 - 0.055 : R * 12.92;
+        G = G > 0.0031308 ? Math.pow(G, 1.0 / 2.4) * 1.055 - 0.055 : G * 12.92;
+        B = B > 0.0031308 ? Math.pow(B, 1.0 / 2.4) * 1.055 - 0.055 : B * 12.92;
+
+        int[] result = new int[3];
+        result[0] = (int) Math.round(R * 255);
+        result[1] = (int) Math.round(G * 255);
+        result[2] = (int) Math.round(B * 255);
+
+        return result;
+    }
+
+    public static int[] LABtoRGBIII(double L, double a, double b) {
+        double X, Y, Z, fX, fY, fZ;
+        int RR, GG, BB, R, G, B;
+
+        fY = Math.pow((L + 16.0) / 116.0, 3.0);
+        if (fY < 0.008856)
+            fY = L / 903.3;
+        Y = fY;
+
+        if (fY > 0.008856)
+            fY = Math.pow(fY, 1.0 / 3.0);
+        else
+            fY = 7.787 * fY + 16.0 / 116.0;
+
+        fX = a / 500.0 + fY;
+        if (fX > 0.206893)
+            X = Math.pow(fX, 3.0);
+        else
+            X = (fX - 16.0 / 116.0) / 7.787;
+
+        fZ = fY - b / 200.0;
+        if (fZ > 0.206893)
+            Z = Math.pow(fZ, 3.0);
+        else
+            Z = (fZ - 16.0 / 116.0) / 7.787;
+
+        X *= (0.950456 * 255);
+        Y *= 255;
+        Z *= (1.088754 * 255);
+
+        RR = (int) (3.240479 * X - 1.537150 * Y - 0.498535 * Z + 0.5);
+        GG = (int) (-0.969256 * X + 1.875992 * Y + 0.041556 * Z + 0.5);
+        BB = (int) (0.055648 * X - 0.204043 * Y + 1.057311 * Z + 0.5);
+
+        R = (RR < 0 ? 0 : RR > 255 ? 255 : RR);
+        G = (GG < 0 ? 0 : GG > 255 ? 255 : GG);
+        B = (BB < 0 ? 0 : BB > 255 ? 255 : BB);
+
+        int[] result = {R, G, B};
+        return result;
+    }
+
+    public static double[] LABtoLCH(double L, double a, double b) {
+
+        double H = Math.atan2(b, a);
+
+        if (H > 0) {
+            H = (H / Math.PI) * 180;
+        } else {
+            H = 360 - (Math.abs(H) / Math.PI) * 180;
+        }
+        double C = Math.sqrt(a * a + b * b);
+        double[] result = {L, C, H};
+        return result;
+    }
+
+    public static double[] LCHtoLAB(double L, double C, double H) {
+        double a = Math.cos(degree_2_radian(H)) * C;
+        double b = Math.sin(degree_2_radian(H)) * C;
+
+        double[] result = {L, a, b};
+        return result;
+    }
+
+    public static double degree_2_radian(double degree)
+    {
+        return degree * Math.PI / 180.0;
+    }
+
+    public static double radian_2_degree(double radian)
+    {
+        return radian * 180.0 / Math.PI;
+    }
 }
