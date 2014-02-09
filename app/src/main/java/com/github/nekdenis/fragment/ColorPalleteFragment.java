@@ -109,12 +109,14 @@ public class ColorPalleteFragment extends Fragment implements AbsListView.OnItem
     private void fillColors() {
         colors = new ArrayList<ColorObj>();
         colors.add(new ColorObj("", 25,47,89));
-        colors.add(new ColorObj("", 45,-92,87));
+        colors.add(new ColorObj("", 100,42,127));
         colors.add(new ColorObj("", 45,127,49));
         colors.add(new ColorObj("", 56,-75,-90));
+        colors.add(new ColorObj("", 69,51,127));
         colors.add(new ColorObj("", 56,19,-23));
+        colors.add(new ColorObj("", 31,51,-110));
         colors.add(new ColorObj("", 72,36,79));
-        colors.add(new ColorObj("", 72,76,77));
+        colors.add(new ColorObj("", 49,88,-28));
         colors.add(new ColorObj("", 72,-21,68));
 
     }

@@ -72,7 +72,7 @@ public class ColorObj implements Serializable {
      * @return 0xRRGGBB integer
      */
     public int getRGBint() {
-        int[] rgb = ColorConverter.LABtoRGB(l, a, b);
+        int[] rgb = ColorConverter.LABtoRGBIII(l, a, b);
 
         rgb[0] = (rgb[0] << 16) & 0x00FF0000; //Shift red 16-bits and mask out other stuff
         rgb[1] = (rgb[1] << 8) & 0x0000FF00; //Shift Green 8-bits and mask out other stuff
