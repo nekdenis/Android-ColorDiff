@@ -1,6 +1,5 @@
 package com.github.nekdenis.activity;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -8,10 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.github.nekdenis.R;
 import com.github.nekdenis.dto.ColorObj;
-import com.github.nekdenis.fragment.ColorMatcherFragment;
+import com.github.nekdenis.fragment.ColorPalleteFragment;
 import com.github.nekdenis.util.ColorConverter;
 
-public class MainActivity extends ActionBarActivity implements ColorMatcherFragment.OnFragmentInteractionListener {
+public class MainActivity extends ActionBarActivity implements ColorPalleteFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +19,7 @@ public class MainActivity extends ActionBarActivity implements ColorMatcherFragm
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, ColorMatcherFragment.newInstance(new ColorObj("", 50, 40,42)))
+                    .add(R.id.container, ColorPalleteFragment.newInstance())
                     .commit();
         }
         //testCoverter();
@@ -73,9 +72,8 @@ public class MainActivity extends ActionBarActivity implements ColorMatcherFragm
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public void onColorSelected(ColorObj colorObj) {
+        ColorMatcherActivity.StartWithColor(MainActivity.this, colorObj);
     }
 }

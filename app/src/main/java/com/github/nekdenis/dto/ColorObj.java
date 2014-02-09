@@ -114,11 +114,11 @@ public class ColorObj implements Serializable {
      */
     public String getLCHString(){
         double[] lch = getLCH();
-        return String.format("l:%1$,.2f c:%2$,.2f h:a:%3$,.2f",lch[0], lch[1], lch[2]);
+        return String.format("l:%1$,.1f c:%2$,.1f h:a:%3$,.1f",lch[0], lch[1], lch[2]);
     }
 
     @Override
     public String toString() {
-        return String.format("l:%1$,.2f a:%2$,.2f b:a:%3$,.2f",l, a, b);
+        return String.format("l:%1$,.1f a:%2$,.1f b:a:%3$,.1f",l, a, b);
     }
 }

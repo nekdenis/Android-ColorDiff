@@ -1,19 +1,24 @@
 package com.github.nekdenis.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import com.github.nekdenis.R;
+import com.github.nekdenis.adapter.ColorsAdapter;
 import com.github.nekdenis.dto.ColorObj;
-import com.github.nekdenis.dto.ColorPallete;
+
+import java.util.ArrayList;
 
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a list of colors to choose.
  * <p />
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
@@ -23,15 +28,6 @@ import com.github.nekdenis.dto.ColorPallete;
  */
 @SuppressWarnings("JavadocReference")
 public class ColorPalleteFragment extends Fragment implements AbsListView.OnItemClickListener {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -46,13 +42,10 @@ public class ColorPalleteFragment extends Fragment implements AbsListView.OnItem
      */
     private ListAdapter mAdapter;
 
-    // TODO: Rename and change types of parameters
-    public static ColorPalleteFragment newInstance(String param1, String param2) {
+    private ArrayList<ColorObj> colors;
+
+    public static ColorPalleteFragment newInstance() {
         ColorPalleteFragment fragment = new ColorPalleteFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -67,26 +60,20 @@ public class ColorPalleteFragment extends Fragment implements AbsListView.OnItem
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<ColorObj>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, ColorPallete.ITEMS);
+        fillColors();
+        mAdapter = new ColorsAdapter(getActivity(), colors);
     }
 
+
+    @SuppressLint("NewApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item, container, false);
 
-        // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
 
-        // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
 
         return view;
@@ -115,21 +102,21 @@ public class ColorPalleteFragment extends Fragment implements AbsListView.OnItem
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(ColorPallete.ITEMS.get(position).getId());
+            mListener.onColorSelected(colors.get(position));
         }
     }
 
-    /**
-     * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
-     * to supply the text it should use.
-     */
-    public void setEmptyText(CharSequence emptyText) {
-        View emptyView = mListView.getEmptyView();
+    private void fillColors() {
+        colors = new ArrayList<ColorObj>();
+        colors.add(new ColorObj("", 25,47,89));
+        colors.add(new ColorObj("", 45,-92,87));
+        colors.add(new ColorObj("", 45,127,49));
+        colors.add(new ColorObj("", 56,-75,-90));
+        colors.add(new ColorObj("", 56,19,-23));
+        colors.add(new ColorObj("", 72,36,79));
+        colors.add(new ColorObj("", 72,76,77));
+        colors.add(new ColorObj("", 72,-21,68));
 
-        if (emptyText instanceof TextView) {
-            ((TextView) emptyView).setText(emptyText);
-        }
     }
 
     /**
@@ -144,7 +131,7 @@ public class ColorPalleteFragment extends Fragment implements AbsListView.OnItem
     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+        public void onColorSelected(ColorObj colorObj);
     }
 
 }
