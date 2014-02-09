@@ -4,14 +4,16 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import com.github.nekdenis.R;
+import com.github.nekdenis.adapter.ControllerViewPagerAdapter;
 import com.github.nekdenis.dto.ColorObj;
+import com.github.nekdenis.view.ColorController;
 
 
 /**
@@ -19,7 +21,6 @@ import com.github.nekdenis.dto.ColorObj;
  */
 public class ColorMatcherFragment extends Fragment {
     private static final String EXTRA_COLOR_OBJECT = "EXTRA_COLOR_OBJECT";
-    public static final int A_STEP = 10;
 
     private OnFragmentInteractionListener mListener;
 
@@ -28,15 +29,8 @@ public class ColorMatcherFragment extends Fragment {
 
     private View leftSquare;
     private View rightSquare;
-    private SeekBar seekBarL;
-    private SeekBar seekBarA;
-    private SeekBar seekBarB;
-    private Button buttonDecL;
-    private Button buttonIncL;
-    private Button buttonDecA;
-    private Button buttonIncA;
-    private Button buttonDecB;
-    private Button buttonIncB;
+
+    private ViewPager controllerViewPager;
     private TextView textOriginalRGB;
     private TextView textModifiedRGB;
     private TextView textOriginalLAB;
@@ -73,24 +67,17 @@ public class ColorMatcherFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_color_matcher, container, false);
 
+        controllerViewPager = (ViewPager) view.findViewById(R.id.color_matcher_controllers_pager);
         leftSquare = view.findViewById(R.id.color_matcher_left_square);
         rightSquare = view.findViewById(R.id.color_matcher_right_square);
-        seekBarL = (SeekBar) view.findViewById(R.id.color_matcher_light_controller);
-        seekBarA = (SeekBar) view.findViewById(R.id.color_matcher_a_controller);
-        seekBarB = (SeekBar) view.findViewById(R.id.color_matcher_b_controller);
-        buttonDecL = (Button) view.findViewById(R.id.color_matcher_button_dec_l);
-        buttonIncL = (Button) view.findViewById(R.id.color_matcher_button_inc_l);
-        buttonDecA = (Button) view.findViewById(R.id.color_matcher_button_dec_a);
-        buttonIncA = (Button) view.findViewById(R.id.color_matcher_button_inc_a);
-        buttonDecB = (Button) view.findViewById(R.id.color_matcher_button_dec_b);
-        buttonIncB = (Button) view.findViewById(R.id.color_matcher_button_inc_b);
+
         finishButton = (Button) view.findViewById(R.id.color_matcher_finish_button);
         textModifiedLAB = (TextView) view.findViewById(R.id.color_matcher_right_lab);
         textModifiedRGB = (TextView) view.findViewById(R.id.color_matcher_right_rgb);
         textOriginalRGB = (TextView) view.findViewById(R.id.color_matcher_left_rgb);
         textOriginalLAB = (TextView) view.findViewById(R.id.color_matcher_left_lab);
 
-        updateSeekBars();
+        initViewPager();
         initListeners();
         updateOriginalSquare();
         updateModifiedSquare();
@@ -98,99 +85,19 @@ public class ColorMatcherFragment extends Fragment {
         return view;
     }
 
+    private void initViewPager() {
+        ColorController.OnColorModifiedListener colorModifiedListener = new ColorController.OnColorModifiedListener() {
+            @Override
+            public void onModified(ColorObj color) {
+                ColorMatcherFragment.this.modifiedColor = color;
+                updateModifiedSquare();
+            }
+        };
+        controllerViewPager.setAdapter(new ControllerViewPagerAdapter(getActivity(), colorModifiedListener, modifiedColor));
+    }
+
     private void initListeners() {
 
-        buttonDecL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onDecLClicked();
-            }
-        });
-
-        buttonIncL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onIncLClicked();
-            }
-        });
-
-        buttonDecA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onDecAClicked();
-            }
-        });
-
-        buttonIncA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onIncAClicked();
-            }
-        });
-
-        buttonDecB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onDecBClicked();
-            }
-        });
-
-        buttonIncB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onIncBClicked();
-            }
-        });
-
-        seekBarL.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                updateColorLPercent(i);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
-
-
-        seekBarA.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                updateColorAPercent(i);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
-
-
-        seekBarB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                updateColorBPercent(i);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
     }
 
     @Override
@@ -210,61 +117,6 @@ public class ColorMatcherFragment extends Fragment {
         mListener = null;
     }
 
-    private void onDecLClicked() {
-        updateColorL(-A_STEP);
-    }
-
-    private void onIncLClicked() {
-        updateColorL(A_STEP);
-    }
-
-    private void onDecAClicked() {
-        updateColorA(-A_STEP);
-    }
-
-    private void onIncAClicked() {
-        updateColorA(A_STEP);
-    }
-
-    private void onDecBClicked() {
-        updateColorB(-A_STEP);
-    }
-
-    private void onIncBClicked() {
-        updateColorB(A_STEP);
-    }
-
-
-    private void updateColorL(int step) {
-        modifiedColor.setL(modifiedColor.getL() + step);
-        updateModifiedSquare();
-    }
-
-    private void updateColorA(int step) {
-        modifiedColor.setA(modifiedColor.getA() + step);
-        updateModifiedSquare();
-    }
-
-    private void updateColorB(int step) {
-        modifiedColor.setB(modifiedColor.getB() + step);
-        updateModifiedSquare();
-    }
-
-    private void updateColorLPercent(int value) {
-        modifiedColor.setL(value);
-        updateModifiedSquare();
-    }
-
-    private void updateColorAPercent(int value) {
-        modifiedColor.setA((value-50)*128/50);
-        updateModifiedSquare();
-    }
-
-    private void updateColorBPercent(int value) {
-        modifiedColor.setB((value-50)*128/50);
-        updateModifiedSquare();
-    }
-
     private void updateOriginalSquare() {
         leftSquare.setBackgroundColor(originalColor.getRGBint());
         textOriginalLAB.setText(originalColor.toString());
@@ -275,12 +127,6 @@ public class ColorMatcherFragment extends Fragment {
         rightSquare.setBackgroundColor(modifiedColor.getRGBint());
         textModifiedLAB.setText(modifiedColor.toString());
         textModifiedRGB.setText(Integer.toHexString(modifiedColor.getRGBint()));
-    }
-
-    private void updateSeekBars() {
-        seekBarL.setProgress(modifiedColor.getL());
-        seekBarA.setProgress((modifiedColor.getA()+128)*100/256);
-        seekBarB.setProgress((modifiedColor.getB()+128)*100/256);
     }
 
     /**
@@ -297,4 +143,5 @@ public class ColorMatcherFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
 }
