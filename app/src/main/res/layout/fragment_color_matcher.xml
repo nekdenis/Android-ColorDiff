@@ -43,6 +43,14 @@
         />
 
     <TextView
+        android:id="@+id/color_matcher_left_lch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/color_matcher_left_lab"
+        android:layout_marginLeft="25dp"
+        />
+
+    <TextView
         android:id="@+id/color_matcher_right_rgb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,6 +64,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/color_matcher_right_rgb"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="25dp"
+        />
+
+    <TextView
+        android:id="@+id/color_matcher_right_lch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/color_matcher_right_lab"
         android:layout_alignParentRight="true"
         android:layout_marginRight="25dp"
         />

@@ -35,6 +35,8 @@ public class ColorMatcherFragment extends Fragment {
     private TextView textModifiedRGB;
     private TextView textOriginalLAB;
     private TextView textModifiedLAB;
+    private TextView textOriginalLCH;
+    private TextView textModifiedLCH;
     private Button finishButton;
 
     /**
@@ -73,9 +75,11 @@ public class ColorMatcherFragment extends Fragment {
 
         finishButton = (Button) view.findViewById(R.id.color_matcher_finish_button);
         textModifiedLAB = (TextView) view.findViewById(R.id.color_matcher_right_lab);
+        textModifiedLCH = (TextView) view.findViewById(R.id.color_matcher_right_lch);
         textModifiedRGB = (TextView) view.findViewById(R.id.color_matcher_right_rgb);
         textOriginalRGB = (TextView) view.findViewById(R.id.color_matcher_left_rgb);
         textOriginalLAB = (TextView) view.findViewById(R.id.color_matcher_left_lab);
+        textOriginalLCH = (TextView) view.findViewById(R.id.color_matcher_left_lch);
 
         initViewPager();
         initListeners();
@@ -121,12 +125,14 @@ public class ColorMatcherFragment extends Fragment {
         leftSquare.setBackgroundColor(originalColor.getRGBint());
         textOriginalLAB.setText(originalColor.toString());
         textOriginalRGB.setText("" + originalColor.getRGBint());
+        textOriginalLCH.setText("" + originalColor.getLCHString());
     }
 
     private void updateModifiedSquare() {
         rightSquare.setBackgroundColor(modifiedColor.getRGBint());
         textModifiedLAB.setText(modifiedColor.toString());
         textModifiedRGB.setText(Integer.toHexString(modifiedColor.getRGBint()));
+        textModifiedLCH.setText(modifiedColor.getLCHString());
     }
 
     /**

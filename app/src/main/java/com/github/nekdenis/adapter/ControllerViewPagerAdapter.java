@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.github.nekdenis.dto.ColorObj;
 import com.github.nekdenis.view.ColorController;
 import com.github.nekdenis.view.LABController;
+import com.github.nekdenis.view.LHCController;
 
 public class ControllerViewPagerAdapter extends PagerAdapter {
 
@@ -46,7 +47,7 @@ public class ControllerViewPagerAdapter extends PagerAdapter {
                 result = labController;
                 break;
             case 0:
-                LABController lchController = new LABController(context);
+                LHCController lchController = new LHCController(context);
                 lchController.setColorModifiedListener(colorModifiedListener);
                 lchController.updateCurrentColor(modifiedColor);
                 result = lchController;

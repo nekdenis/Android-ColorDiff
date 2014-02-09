@@ -54,6 +54,14 @@ public class ColorObj implements Serializable {
      *
      * @return r-g-b array
      */
+
+    public void setLCH(double[] lch) {
+        double[] lab = ColorConverter.LCHtoLAB(lch[0], lch[1], lch[2]);
+        l = lab[0];
+        a = lab[1];
+        b = lab[2];
+    }
+
     public int[] getRGB() {
         return ColorConverter.LABtoRGB(l, a, b);
     }
@@ -100,8 +108,17 @@ public class ColorObj implements Serializable {
         return id;
     }
 
+    /**
+     *
+     * @return Color represented in CIA LCH color space
+     */
+    public String getLCHString(){
+        double[] lch = getLCH();
+        return String.format("l:%1$,.2f c:%2$,.2f h:a:%3$,.2f",lch[0], lch[1], lch[2]);
+    }
+
     @Override
     public String toString() {
-        return "" + l + " " + a + " " + b;
+        return String.format("l:%1$,.2f a:%2$,.2f b:a:%3$,.2f",l, a, b);
     }
 }
