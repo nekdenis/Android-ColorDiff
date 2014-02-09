@@ -5,6 +5,14 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_next">Next</string>
     <string name="button_finish">Finish</string>
+    <string name="result_orig_color">Original color:</string>
+    <string name="result_left_color">Left color:</string>
+    <string name="result_right_color">Right color:</string>
+    <string name="result_share_button">Share results</string>
+    <string name="share_using">Share using:</string>
+    <string name="matcher_highest_toast">Choose highest value</string>
+    <string name="matcher_lowest_toast">Choose lowest value</string>
 
 </resources>

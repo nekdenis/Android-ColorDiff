@@ -10,9 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.github.nekdenis.R;
+import com.github.nekdenis.activity.ResultActivity;
 import com.github.nekdenis.adapter.ControllerViewPagerAdapter;
 import com.github.nekdenis.dto.ColorObj;
+import com.github.nekdenis.dto.ResultObj;
 import com.github.nekdenis.view.ColorController;
 
 
@@ -26,6 +29,7 @@ public class ColorMatcherFragment extends Fragment {
 
     private ColorObj originalColor;
     private ColorObj modifiedColor;
+    private ResultObj resultObj;
 
     private View leftSquare;
     private View rightSquare;
@@ -38,6 +42,8 @@ public class ColorMatcherFragment extends Fragment {
     private TextView textOriginalLCH;
     private TextView textModifiedLCH;
     private Button finishButton;
+
+    private int step = 1;
 
     /**
      * @param colorObj color object for color test
@@ -86,6 +92,8 @@ public class ColorMatcherFragment extends Fragment {
         updateOriginalSquare();
         updateModifiedSquare();
 
+        Toast.makeText(getActivity(), getResources().getString(R.string.matcher_lowest_toast), Toast.LENGTH_SHORT);
+
         return view;
     }
 
@@ -101,7 +109,28 @@ public class ColorMatcherFragment extends Fragment {
     }
 
     private void initListeners() {
+        finishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onFinishClick();
+            }
+        });
+    }
 
+    private void onFinishClick() {
+        if(step==1){
+            step++;
+            finishButton.setText(R.string.button_finish);
+            resultObj = new ResultObj();
+            resultObj.setOriginalColor(originalColor);
+            resultObj.setLeftColor(new ColorObj("", modifiedColor));
+            modifiedColor = new ColorObj("", originalColor);
+            updateModifiedSquare();
+            Toast.makeText(getActivity(), getResources().getString(R.string.matcher_highest_toast), Toast.LENGTH_SHORT);
+        }else{
+            resultObj.setRightColor(new ColorObj("",modifiedColor));
+            ResultActivity.startWithResult(getActivity(), resultObj);
+        }
     }
 
     @Override

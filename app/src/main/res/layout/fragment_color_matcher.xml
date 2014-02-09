@@ -90,6 +90,6 @@
         android:layout_height="54dp"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        android:text="@string/button_finish"/>
+        android:text="@string/button_next"/>
 
 </RelativeLayout>

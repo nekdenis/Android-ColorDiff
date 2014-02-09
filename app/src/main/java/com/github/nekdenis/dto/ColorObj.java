@@ -117,6 +117,14 @@ public class ColorObj implements Serializable {
         return String.format("l:%1$,.1f c:%2$,.1f h:a:%3$,.1f",lch[0], lch[1], lch[2]);
     }
 
+    /**
+     *
+     * @return Color represented in CIA LAB color space
+     */
+    public String getLABString(){
+        return String.format("l:%1$,.1f a:%2$,.1f b:a:%3$,.1f",l, a, b);
+    }
+
     @Override
     public String toString() {
         return String.format("l:%1$,.1f a:%2$,.1f b:a:%3$,.1f",l, a, b);
