@@ -9,6 +9,10 @@ import android.widget.SeekBar;
 import com.github.nekdenis.R;
 import com.github.nekdenis.dto.ColorObj;
 
+
+/**
+ * Controller that allows to change L A B parameters of color
+ */
 public class LABController extends ColorController {
 
     public static final int A_STEP = 10;

@@ -8,15 +8,15 @@ import com.github.nekdenis.R;
 import com.github.nekdenis.dto.ResultObj;
 import com.github.nekdenis.fragment.ResultFragment;
 
+/**
+ * Activity for showing and sharing results
+ */
 public class ResultActivity extends FragmentActivity {
 
     public static final String EXTRA_RESULT = "EXTRA_RESULT";
 
     private ResultObj resultObj;
 
-    /**
-     * Starts activity with color matcher
-     */
     public static void startWithResult(Context context, ResultObj resultObj) {
         Intent i = new Intent(context, ResultActivity.class);
         i.putExtra(EXTRA_RESULT, resultObj);

@@ -408,6 +408,14 @@ public class ColorConverter {
         return result;
     }
 
+    /**
+     * Convert CIE LAB to CIE LCH
+     *
+     * @param L
+     * @param a
+     * @param b
+     * @return
+     */
     public static double[] LABtoLCH(double L, double a, double b) {
 
         double H = Math.atan2(b, a);
@@ -422,21 +430,20 @@ public class ColorConverter {
         return result;
     }
 
+
+    /**
+     * Convert CIE LCH to CIE LAB
+     *
+     * @param L
+     * @param C
+     * @param H
+     * @return
+     */
     public static double[] LCHtoLAB(double L, double C, double H) {
-        double a = Math.cos(degree_2_radian(H)) * C;
-        double b = Math.sin(degree_2_radian(H)) * C;
+        double a = Math.cos(Math.toRadians(H)) * C;
+        double b = Math.sin(Math.toRadians(H)) * C;
 
         double[] result = {L, a, b};
         return result;
-    }
-
-    public static double degree_2_radian(double degree)
-    {
-        return degree * Math.PI / 180.0;
-    }
-
-    public static double radian_2_degree(double radian)
-    {
-        return radian * 180.0 / Math.PI;
     }
 }

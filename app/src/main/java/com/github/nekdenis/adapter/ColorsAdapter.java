@@ -10,6 +10,9 @@ import com.github.nekdenis.dto.ColorObj;
 
 import java.util.ArrayList;
 
+/**
+ * Simple adapter for color grid item
+ */
 public class ColorsAdapter extends ArrayAdapter<ColorObj> {
     private LayoutInflater inflater;
 

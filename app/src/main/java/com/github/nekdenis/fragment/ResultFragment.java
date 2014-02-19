@@ -9,20 +9,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import com.github.nekdenis.R;
+import com.github.nekdenis.dto.ColorObj;
 import com.github.nekdenis.dto.ResultObj;
 
+/**
+ * Fragments for showing and sharing results
+ */
 public class ResultFragment extends Fragment {
 
     public static final String EXTRA_RESULT_OBJECT = "EXTRA_RESULT_OBJECT";
 
     private ResultObj resultObj;
 
-    private View leftColorView;
     private View centerColorView;
     private View rightColorView;
     private TextView rightColorText;
     private TextView centerColorText;
-    private TextView leftColorText;
     private Button shareButton;
 
 
@@ -50,10 +52,8 @@ public class ResultFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result, container, false);
 
-        leftColorText = (TextView) view.findViewById(R.id.result_left_color_text);
         centerColorText = (TextView) view.findViewById(R.id.result_center_color_text);
         rightColorText = (TextView) view.findViewById(R.id.result_right_color_text);
-        leftColorView = view.findViewById(R.id.result_left_color);
         centerColorView = view.findViewById(R.id.result_center_color);
         rightColorView = view.findViewById(R.id.result_right_color);
         shareButton = (Button) view.findViewById(R.id.result_share_button);
@@ -74,12 +74,10 @@ public class ResultFragment extends Fragment {
     }
 
     private void fillView() {
-        leftColorView.setBackgroundColor(resultObj.getLeftColor().getRGBint());
         centerColorView.setBackgroundColor(resultObj.getOriginalColor().getRGBint());
-        rightColorView.setBackgroundColor(resultObj.getRightColor().getRGBint());
-        rightColorText.setText(resultObj.getRightColor().toString());
+        rightColorView.setBackgroundColor(resultObj.getModifiedColors().get(0).getRGBint());
+        rightColorText.setText(resultObj.getModifiedColors().get(0).toString());
         centerColorText.setText(resultObj.getOriginalColor().toString());
-        leftColorText.setText(resultObj.getLeftColor().toString());
     }
 
     private void onShare() {
@@ -91,8 +89,12 @@ public class ResultFragment extends Fragment {
     }
 
     private String makeShareText() {
-        return String.format("Original color: %1$s \nLeft color: %2$s \nRight color: %3$s",
-                resultObj.getOriginalColor().getLABString(), resultObj.getLeftColor().getLABString(), resultObj.getRightColor().getLABString());
+        StringBuilder sb = new StringBuilder("Original color: ");
+        sb.append(resultObj.getOriginalColor().getLABString()).append("\n");
+        for (ColorObj colorObj : resultObj.getModifiedColors()) {
+            sb.append(colorObj.getLABString()).append("\n");
+        }
+        return sb.toString();
     }
 
 }

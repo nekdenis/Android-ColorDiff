@@ -1,5 +1,6 @@
 package com.github.nekdenis.dto;
 
+import android.util.Log;
 import com.github.nekdenis.util.ColorConverter;
 
 import java.io.Serializable;
@@ -49,19 +50,25 @@ public class ColorObj implements Serializable {
         return ColorConverter.LABtoLCH(l, a, b);
     }
 
-    /**
-     * get color presented in RGB
-     *
-     * @return r-g-b array
-     */
 
+    /**
+     *
+     * update color with defined LCH parameters
+     *
+     */
     public void setLCH(double[] lch) {
         double[] lab = ColorConverter.LCHtoLAB(lch[0], lch[1], lch[2]);
+        Log.d("ColorConverter", "LCH = " + lch[0] + "" + lch[1] + "" + lch[2] + " LAB = " + lab[0] + "" + lab[1] + "" + lab[2]);
         l = lab[0];
         a = lab[1];
         b = lab[2];
     }
 
+    /**
+     * get color presented in RGB
+     *
+     * @return r-g-b array
+     */
     public int[] getRGB() {
         return ColorConverter.LABtoRGB(l, a, b);
     }
@@ -109,24 +116,22 @@ public class ColorObj implements Serializable {
     }
 
     /**
-     *
      * @return Color represented in CIA LCH color space
      */
-    public String getLCHString(){
+    public String getLCHString() {
         double[] lch = getLCH();
-        return String.format("l:%1$,.1f c:%2$,.1f h:a:%3$,.1f",lch[0], lch[1], lch[2]);
+        return String.format("l:%1$,.1f c:%2$,.1f h:%3$,.1f", lch[0], lch[1], lch[2]);
     }
 
     /**
-     *
      * @return Color represented in CIA LAB color space
      */
-    public String getLABString(){
-        return String.format("l:%1$,.1f a:%2$,.1f b:a:%3$,.1f",l, a, b);
+    public String getLABString() {
+        return String.format("l:%1$,.1f a:%2$,.1f b:%3$,.1f", l, a, b);
     }
 
     @Override
     public String toString() {
-        return String.format("l:%1$,.1f a:%2$,.1f b:a:%3$,.1f",l, a, b);
+        return String.format("l:%1$,.1f a:%2$,.1f b:%3$,.1f", l, a, b);
     }
 }

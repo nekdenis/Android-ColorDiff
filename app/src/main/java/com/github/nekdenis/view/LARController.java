@@ -9,10 +9,12 @@ import com.github.nekdenis.R;
 import com.github.nekdenis.dto.ColorObj;
 
 /**
- * Controller that allows to change H parameter of color
- * that presented in CIE LHC color space
+ * Controller that changes color in LAB coordinates.
+ * Changes depends on angle and radius between original color
+ * and modified in AB coordinates
+ * User can change the radius
  */
-public class LHCController extends ColorController {
+public class LARController extends ColorController {
 
     public static final int A_STEP = 10;
     public static final int B_STEP = 2;
@@ -26,20 +28,21 @@ public class LHCController extends ColorController {
     private Button buttonIncC;
 
     private ColorObj modifiedColor;
+    private ColorObj originalColor;
+    private double angle;
+    private int step;
 
-
-
-    public LHCController(Context context) {
+    public LARController(Context context) {
         super(context);
         initView();
     }
 
-    public LHCController(Context context, AttributeSet attrs) {
+    public LARController(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
 
-    public LHCController(Context context, AttributeSet attrs, int defStyle) {
+    public LARController(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initView();
     }
@@ -47,6 +50,11 @@ public class LHCController extends ColorController {
 
     public void updateCurrentColor(ColorObj modifiedColor) {
         this.modifiedColor = modifiedColor;
+    }
+
+    public void setOriginalColorAndAngle(ColorObj originalColor, double angle) {
+        this.originalColor = originalColor;
+        this.angle = angle;
     }
 
     private void initView() {
@@ -108,33 +116,34 @@ public class LHCController extends ColorController {
     }
 
     private void onDecAClicked() {
-        updateColorChroma(-A_STEP);
+        updateColorRadius(-A_STEP);
     }
 
     private void onIncAClicked() {
-        updateColorChroma(A_STEP);
+        updateColorRadius(A_STEP);
     }
 
     private void onDecBClicked() {
-        updateColorChroma(-B_STEP);
+        updateColorRadius(-B_STEP);
     }
 
     private void onIncBClicked() {
-        updateColorChroma(B_STEP);
+        updateColorRadius(B_STEP);
     }
 
     private void onDecCClicked() {
-        updateColorChroma(-C_STEP);
+        updateColorRadius(-C_STEP);
     }
 
     private void onIncCClicked() {
-        updateColorChroma(C_STEP);
+        updateColorRadius(C_STEP);
     }
 
-    private void updateColorChroma(int step) {
-        double[] lch = modifiedColor.getLCH();
-        lch[1] = lch[1] + step;
-        modifiedColor.setLCH(lch);
+    private void updateColorRadius(int stepValue) {
+        step += stepValue;
+        int[] ab = convertAngleAndRadiusToAB(step);
+        modifiedColor.setA(ab[0]);
+        modifiedColor.setB(ab[1]);
         updateModifiedSquare();
     }
 
@@ -142,5 +151,23 @@ public class LHCController extends ColorController {
         if (colorModifiedListener != null) {
             colorModifiedListener.onModified(modifiedColor);
         }
+    }
+
+    private int[] convertAngleAndRadiusToAB(int radius) {
+        int a = (int) (originalColor.getA() + radius * Math.cos(angle));
+        int b = (int) (originalColor.getB() + radius * Math.sin(angle));
+        int[] result = {a, b};
+        return result;
+    }
+
+    /**
+     * set the @param angle between original and modified
+     * colors in AB coordinates
+     *
+     */
+    public void updateAngle(double angle) {
+        this.angle = angle;
+        updateColorRadius(0);
+        updateModifiedSquare();
     }
 }

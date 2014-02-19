@@ -24,6 +24,7 @@ import com.github.nekdenis.view.ColorController;
  */
 public class ColorMatcherFragment extends Fragment {
     private static final String EXTRA_COLOR_OBJECT = "EXTRA_COLOR_OBJECT";
+    public static final int STEPS_COUNT = 9;
 
     private OnFragmentInteractionListener mListener;
 
@@ -35,6 +36,7 @@ public class ColorMatcherFragment extends Fragment {
     private View rightSquare;
 
     private ViewPager controllerViewPager;
+    private ControllerViewPagerAdapter controllerViewPagerAdapter;
     private TextView textOriginalRGB;
     private TextView textModifiedRGB;
     private TextView textOriginalLAB;
@@ -43,7 +45,8 @@ public class ColorMatcherFragment extends Fragment {
     private TextView textModifiedLCH;
     private Button finishButton;
 
-    private int step = 1;
+    private int step = 0;
+    private double angle;
 
     /**
      * @param colorObj color object for color test
@@ -105,7 +108,8 @@ public class ColorMatcherFragment extends Fragment {
                 updateModifiedSquare();
             }
         };
-        controllerViewPager.setAdapter(new ControllerViewPagerAdapter(getActivity(), colorModifiedListener, modifiedColor));
+        controllerViewPagerAdapter = new ControllerViewPagerAdapter(getActivity(), colorModifiedListener, modifiedColor, originalColor, angle);
+        controllerViewPager.setAdapter(controllerViewPagerAdapter);
     }
 
     private void initListeners() {
@@ -118,19 +122,26 @@ public class ColorMatcherFragment extends Fragment {
     }
 
     private void onFinishClick() {
-        if(step==1){
-            step++;
-            finishButton.setText(R.string.button_finish);
+        if (step == 0) {
             resultObj = new ResultObj();
             resultObj.setOriginalColor(originalColor);
-            resultObj.setLeftColor(new ColorObj("", modifiedColor));
-            modifiedColor = new ColorObj("", originalColor);
-            updateModifiedSquare();
-            Toast.makeText(getActivity(), getResources().getString(R.string.matcher_highest_toast), Toast.LENGTH_SHORT);
-        }else{
-            resultObj.setRightColor(new ColorObj("",modifiedColor));
+        }
+        if (step == STEPS_COUNT - 2) {
+            finishButton.setText(R.string.button_finish);
+        }
+        if (step == STEPS_COUNT - 1) {
             ResultActivity.startWithResult(getActivity(), resultObj);
         }
+        step++;
+        resultObj.addModifiedColor(new ColorObj("", modifiedColor));
+        modifiedColor = new ColorObj("", originalColor);
+        updateAngle();
+        updateModifiedSquare();
+    }
+
+    private void updateAngle() {
+        angle = Math.toRadians(360/STEPS_COUNT*step%360);
+        controllerViewPagerAdapter.updateAngle(angle);
     }
 
     @Override
@@ -153,8 +164,8 @@ public class ColorMatcherFragment extends Fragment {
     private void updateOriginalSquare() {
         leftSquare.setBackgroundColor(originalColor.getRGBint());
         textOriginalLAB.setText(originalColor.toString());
-        textOriginalRGB.setText("" + originalColor.getRGBint());
-        textOriginalLCH.setText("" + originalColor.getLCHString());
+        textOriginalRGB.setText(Integer.toHexString(originalColor.getRGBint()));
+        textOriginalLCH.setText(originalColor.getLCHString());
     }
 
     private void updateModifiedSquare() {

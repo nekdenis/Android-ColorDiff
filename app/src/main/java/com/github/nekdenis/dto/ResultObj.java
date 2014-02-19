@@ -1,12 +1,22 @@
 package com.github.nekdenis.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * Contains list of modified colors
+ */
 
 public class ResultObj implements Serializable {
 
     ColorObj originalColor;
-    ColorObj leftColor;
-    ColorObj rightColor;
+    List<ColorObj> modifiedColors;
+
+    public ResultObj() {
+        this.modifiedColors = new ArrayList<ColorObj>();
+    }
 
     public ColorObj getOriginalColor() {
         return originalColor;
@@ -16,19 +26,11 @@ public class ResultObj implements Serializable {
         this.originalColor = originalColor;
     }
 
-    public ColorObj getLeftColor() {
-        return leftColor;
+    public List<ColorObj> getModifiedColors() {
+        return modifiedColors;
     }
 
-    public void setLeftColor(ColorObj leftColor) {
-        this.leftColor = leftColor;
-    }
-
-    public ColorObj getRightColor() {
-        return rightColor;
-    }
-
-    public void setRightColor(ColorObj rightColor) {
-        this.rightColor = rightColor;
+    public void addModifiedColor(ColorObj modifiedColor) {
+        this.modifiedColors.add(modifiedColor);
     }
 }
