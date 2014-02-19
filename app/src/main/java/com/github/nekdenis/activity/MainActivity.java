@@ -54,7 +54,7 @@ public class MainActivity extends ActionBarActivity implements ColorPalleteFragm
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -67,6 +67,7 @@ public class MainActivity extends ActionBarActivity implements ColorPalleteFragm
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            ColorConverterActivty.startActivity(this);
             return true;
         }
         return super.onOptionsItemSelected(item);
