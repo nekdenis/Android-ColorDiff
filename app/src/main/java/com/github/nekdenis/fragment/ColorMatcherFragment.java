@@ -126,10 +126,10 @@ public class ColorMatcherFragment extends Fragment {
             resultObj = new ResultObj();
             resultObj.setOriginalColor(originalColor);
         }
-        if (step == STEPS_COUNT - 2) {
+        if (step == STEPS_COUNT - 1) {
             finishButton.setText(R.string.button_finish);
         }
-        if (step == STEPS_COUNT - 1) {
+        if (step == STEPS_COUNT) {
             ResultActivity.startWithResult(getActivity(), resultObj);
         }
         step++;
