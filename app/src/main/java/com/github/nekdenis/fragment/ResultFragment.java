@@ -22,10 +22,6 @@ import java.util.List;
 public class ResultFragment extends Fragment {
 
     public static final String EXTRA_RESULT_OBJECT = "EXTRA_RESULT_OBJECT";
-    public static final String EXTRA_DATASET = "dataset";
-    public static final String EXTRA_RENDERER = "renderer";
-    public static final String EXTRA_CURRENT_SERIES = "current_series";
-    public static final String EXTRA_CURRENT_RENDERER = "current_renderer";
 
     private ResultObj resultObj;
 
@@ -35,7 +31,8 @@ public class ResultFragment extends Fragment {
     private TextView centerColorText;
     private Button shareButton;
 
-    private XYPlot plot;
+    private XYPlot leftPlot;
+    private XYPlot rightPlot;
 
     public static ResultFragment newInstance(ResultObj resultObj) {
         ResultFragment fragment = new ResultFragment();
@@ -68,7 +65,8 @@ public class ResultFragment extends Fragment {
         centerColorView = view.findViewById(R.id.result_center_color);
         rightColorView = view.findViewById(R.id.result_right_color);
         shareButton = (Button) view.findViewById(R.id.result_share_button);
-        plot = (XYPlot) view.findViewById(R.id.mySimpleXYPlot);
+        leftPlot = (XYPlot) view.findViewById(R.id.result_left_plot);
+        rightPlot = (XYPlot) view.findViewById(R.id.result_right_plot);
 
         initPlot();
         fillView();
@@ -93,15 +91,23 @@ public class ResultFragment extends Fragment {
         series1Format.setPointLabelFormatter(new PointLabelFormatter());
         series1Format.configure(getActivity(),
                 R.xml.line_point_formatter_with_plf1);
-        plot.addSeries(series1, series1Format);
-        plot.setRangeLabel("");
-        plot.setDomainLabel("");
-        plot.setTitle("");
-        plot.setTicksPerRangeLabel(3);
-        plot.getGraphWidget().setDomainLabelOrientation(-45);
-        plot.setDomainBoundaries(-128, 128, BoundaryMode.FIXED);
-        plot.setRangeBoundaries(-128, 128, BoundaryMode.FIXED);
-        plot.redraw();
+        leftPlot.addSeries(series1, series1Format);
+        leftPlot.setRangeLabel("");
+        leftPlot.setDomainLabel("");
+        leftPlot.setTitle("");
+        leftPlot.setTicksPerRangeLabel(3);
+        leftPlot.getGraphWidget().setDomainLabelOrientation(-45);
+        leftPlot.setDomainBoundaries(-128, 128, BoundaryMode.FIXED);
+        leftPlot.setRangeBoundaries(-128, 128, BoundaryMode.FIXED);
+        leftPlot.redraw();
+
+        rightPlot.addSeries(series1, series1Format);
+        rightPlot.setRangeLabel("");
+        rightPlot.setDomainLabel("");
+        rightPlot.setTitle("");
+        rightPlot.setTicksPerRangeLabel(3);
+        rightPlot.getGraphWidget().setDomainLabelOrientation(-45);
+        rightPlot.redraw();
     }
 
     @Override
