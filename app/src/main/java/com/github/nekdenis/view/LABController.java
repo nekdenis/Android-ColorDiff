@@ -190,32 +190,32 @@ public class LABController extends ColorController {
     }
 
     private void updateColorL(int step) {
-        modifiedColor.setL((int) (modifiedColor.getL() + step));
+        modifiedColor.setL((int) (Math.max(Math.min(modifiedColor.getL() + step, 100), -100)));
         updateModifiedSquare();
     }
 
     private void updateColorA(int step) {
-        modifiedColor.setA((int) (modifiedColor.getA() + step));
+        modifiedColor.setA((int) (Math.max(Math.min(modifiedColor.getA() + step, 128), -128)));
         updateModifiedSquare();
     }
 
     private void updateColorB(int step) {
-        modifiedColor.setB((int) (modifiedColor.getB() + step));
+        modifiedColor.setB((int) (Math.max(Math.min(modifiedColor.getB() + step, 128), -128)));
         updateModifiedSquare();
     }
 
     private void updateColorLPercent(int value) {
-        modifiedColor.setL(value);
+        modifiedColor.setL(Math.max(Math.min(value, 100), -100));
         updateModifiedSquare();
     }
 
     private void updateColorAPercent(int value) {
-        modifiedColor.setA((value - 50) * 128 / 50);
+        modifiedColor.setA(Math.max(Math.min((value - 50) * 128 / 50, 128), -128));
         updateModifiedSquare();
     }
 
     private void updateColorBPercent(int value) {
-        modifiedColor.setB((value - 50) * 128 / 50);
+        modifiedColor.setB(Math.max(Math.min((value - 50) * 128 / 50, 128), -128));
         updateModifiedSquare();
     }
 

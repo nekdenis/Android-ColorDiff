@@ -133,7 +133,7 @@ public class LHCController extends ColorController {
 
     private void updateColorChroma(int step) {
         double[] lch = modifiedColor.getLCH();
-        lch[1] = lch[1] + step;
+        lch[1] = Math.max(Math.min(lch[1] + step, 100), -100);
         modifiedColor.setLCH(lch);
         updateModifiedSquare();
     }

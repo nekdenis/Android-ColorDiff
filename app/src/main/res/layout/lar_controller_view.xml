@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="25dp"
         android:layout_alignParentTop="true"
-        android:text="C -10"/>
+        android:text="Rad -10"/>
 
     <Button
         android:id="@+id/color_matcher_button_inc_a"
@@ -20,7 +20,7 @@
         android:layout_marginRight="25dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="C +10"/>
+        android:text="Rad +10"/>
 
 
     <Button
@@ -30,7 +30,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
         android:layout_below="@id/color_matcher_button_dec_a"
-        android:text="C -2"/>
+        android:text="Rad -2"/>
 
     <Button
         android:id="@+id/color_matcher_button_inc_b"
@@ -40,7 +40,7 @@
         android:layout_marginTop="10dp"
         android:layout_alignParentRight="true"
         android:layout_below="@id/color_matcher_button_inc_a"
-        android:text="C +2"/>
+        android:text="Rad +2"/>
 
     <Button
         android:id="@+id/color_matcher_button_dec_c"
@@ -49,7 +49,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/color_matcher_button_dec_b"
-        android:text="C -1"/>
+        android:text="Rad -1"/>
 
     <Button
         android:id="@+id/color_matcher_button_inc_c"
@@ -59,7 +59,7 @@
         android:layout_marginTop="10dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/color_matcher_button_inc_b"
-        android:text="C +1"/>
+        android:text="Rad +1"/>
 
 
 </RelativeLayout>

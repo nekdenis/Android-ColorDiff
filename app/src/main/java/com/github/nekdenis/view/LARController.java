@@ -59,7 +59,7 @@ public class LARController extends ColorController {
 
     private void initView() {
         View view = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-                .inflate(R.layout.lhc_controller_view, this);
+                .inflate(R.layout.lar_controller_view, this);
 
         buttonDecA = (Button) view.findViewById(R.id.color_matcher_button_dec_a);
         buttonIncA = (Button) view.findViewById(R.id.color_matcher_button_inc_a);
@@ -156,7 +156,7 @@ public class LARController extends ColorController {
     private int[] convertAngleAndRadiusToAB(int radius) {
         int a = (int) (originalColor.getA() + radius * Math.cos(angle));
         int b = (int) (originalColor.getB() + radius * Math.sin(angle));
-        int[] result = {a, b};
+        int[] result = {Math.max(Math.min(a, 128), -128), Math.max(Math.min(b, 128), -128)};
         return result;
     }
 
