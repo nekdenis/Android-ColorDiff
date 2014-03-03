@@ -33,4 +33,8 @@ public class ResultObj implements Serializable {
     public void addModifiedColor(ColorObj modifiedColor) {
         this.modifiedColors.add(modifiedColor);
     }
+
+    public void addModifiedColor(int index, ColorObj modifiedColor) {
+        this.modifiedColors.add(index, modifiedColor);
+    }
 }

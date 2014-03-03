@@ -11,12 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.androidplot.xy.*;
 import com.github.nekdenis.R;
 import com.github.nekdenis.activity.ResultActivity;
 import com.github.nekdenis.adapter.ControllerViewPagerAdapter;
 import com.github.nekdenis.dto.ColorObj;
 import com.github.nekdenis.dto.ResultObj;
 import com.github.nekdenis.view.ColorController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -44,6 +48,7 @@ public class ColorMatcherFragment extends Fragment {
     private TextView textOriginalLCH;
     private TextView textModifiedLCH;
     private Button finishButton;
+    private XYPlot plot;
 
     private int step = 0;
     private double angle;
@@ -89,6 +94,7 @@ public class ColorMatcherFragment extends Fragment {
         textOriginalRGB = (TextView) view.findViewById(R.id.color_matcher_left_rgb);
         textOriginalLAB = (TextView) view.findViewById(R.id.color_matcher_left_lab);
         textOriginalLCH = (TextView) view.findViewById(R.id.color_matcher_left_lch);
+        plot = (XYPlot) view.findViewById(R.id.color_matcher_plot);
 
         initViewPager();
         initListeners();
@@ -121,6 +127,31 @@ public class ColorMatcherFragment extends Fragment {
         });
     }
 
+    private void updatePlot() {
+        List<Double> xs = new ArrayList<Double>();
+        List<Double> ys = new ArrayList<Double>();
+        for (ColorObj colorObj : resultObj.getModifiedColors()) {
+            xs.add(colorObj.getA());
+            ys.add(colorObj.getB());
+        }
+
+        XYSeries series1 = new SimpleXYSeries(xs, ys, "");
+
+        LineAndPointFormatter series1Format = new LineAndPointFormatter();
+        series1Format.setPointLabelFormatter(new PointLabelFormatter());
+        series1Format.configure(getActivity(),
+                R.xml.line_point_formatter_with_plf1);
+        plot.addSeries(series1, series1Format);
+        plot.setRangeLabel("");
+        plot.setDomainLabel("");
+        plot.setTitle("");
+        plot.setTicksPerRangeLabel(3);
+        plot.getGraphWidget().setDomainLabelOrientation(-45);
+        plot.setDomainBoundaries(-128, 128, BoundaryMode.FIXED);
+        plot.setRangeBoundaries(-128, 128, BoundaryMode.FIXED);
+        plot.redraw();
+    }
+
     private void onFinishClick() {
         if (step == 0) {
             resultObj = new ResultObj();
@@ -132,15 +163,15 @@ public class ColorMatcherFragment extends Fragment {
         if (step == STEPS_COUNT) {
             ResultActivity.startWithResult(getActivity(), resultObj);
         }
-        step++;
-        resultObj.addModifiedColor(new ColorObj("", modifiedColor));
+        resultObj.addModifiedColor(step++, new ColorObj("", modifiedColor));
         modifiedColor = new ColorObj("", originalColor);
         updateAngle();
         updateModifiedSquare();
+        updatePlot();
     }
 
     private void updateAngle() {
-        angle = Math.toRadians(360/STEPS_COUNT*step%360);
+        angle = Math.toRadians(360 / STEPS_COUNT * step % 360);
         controllerViewPagerAdapter.updateAngle(angle);
     }
 
