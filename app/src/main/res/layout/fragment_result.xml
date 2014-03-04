@@ -59,20 +59,20 @@
         android:layout_alignRight="@+id/result_right_color"/>
 
     <Button
-        android:id="@+id/result_share_button"
+        android:id="@+id/result_next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/result_center_color"
         android:layout_marginTop="15dp"
         android:textSize="22dp"
         android:layout_centerHorizontal="true"
-        android:text="@string/result_share_button"/>
+        android:text="@string/result_next_button"/>
 
     <com.androidplot.xy.XYPlot
         android:id="@+id/result_left_plot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/result_share_button"
+        android:layout_below="@id/result_next_button"
         android:layout_toLeftOf="@id/result_center_view"
         android:layout_marginTop="18dp"
         androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size"
@@ -96,7 +96,7 @@
         android:id="@+id/result_right_plot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/result_share_button"
+        android:layout_below="@id/result_next_button"
         android:layout_toRightOf="@id/result_center_view"
         android:layout_marginTop="18dp"
         androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size"

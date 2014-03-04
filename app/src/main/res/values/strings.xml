@@ -10,9 +10,14 @@
     <string name="result_orig_color">Original color:</string>
     <string name="result_left_color">Left color:</string>
     <string name="result_right_color">Right color:</string>
-    <string name="result_share_button">Share results</string>
+    <string name="result_next_button">Next step</string>
     <string name="share_using">Share using:</string>
     <string name="matcher_highest_toast">Choose highest value</string>
     <string name="matcher_lowest_toast">Choose lowest value</string>
+    <string name="user_info_name_hint">Your Name</string>
+    <string name="user_info_distance_hint">Distance between phone and eyes</string>
+    <string name="user_info_phone_model">Phone model:</string>
+    <string name="user_info_screen_brightness">Screen brightness:</string>
+    <string name="user_info_finish">Finish</string>
 
 </resources>

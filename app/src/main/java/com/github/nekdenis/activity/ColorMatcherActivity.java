@@ -16,7 +16,7 @@ public class ColorMatcherActivity extends FragmentActivity implements ColorMatch
     /**
      * Starts activity with color matcher
      */
-    public static void StartWithColor(Context context, ColorObj colorObj) {
+    public static void startWithColor(Context context, ColorObj colorObj) {
         Intent i = new Intent(context, ColorMatcherActivity.class);
         i.putExtra(EXTRA_COLOR,colorObj);
         context.startActivity(i);

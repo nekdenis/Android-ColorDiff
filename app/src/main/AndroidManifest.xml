@@ -21,6 +21,7 @@
         <activity android:name=".activity.ColorMatcherActivity"></activity>
         <activity android:name=".activity.ResultActivity"></activity>
         <activity android:name=".activity.ColorConverterActivty"/>
+        <activity android:name=".activity.UserInfoActivity"/>
 
     </application>
 

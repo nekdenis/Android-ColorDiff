@@ -75,6 +75,6 @@ public class MainActivity extends ActionBarActivity implements ColorPalleteFragm
 
     @Override
     public void onColorSelected(ColorObj colorObj) {
-        ColorMatcherActivity.StartWithColor(MainActivity.this, colorObj);
+        ColorMatcherActivity.startWithColor(MainActivity.this, colorObj);
     }
 }

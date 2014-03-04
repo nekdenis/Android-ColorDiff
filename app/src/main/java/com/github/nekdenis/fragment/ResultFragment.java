@@ -1,6 +1,5 @@
 package com.github.nekdenis.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.androidplot.xy.*;
 import com.github.nekdenis.R;
+import com.github.nekdenis.activity.UserInfoActivity;
 import com.github.nekdenis.dto.ColorObj;
 import com.github.nekdenis.dto.ResultObj;
 
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Fragments for showing and sharing results
+ * Fragments for showing results
  */
 public class ResultFragment extends Fragment {
 
@@ -64,7 +64,7 @@ public class ResultFragment extends Fragment {
         rightColorText = (TextView) view.findViewById(R.id.result_right_color_text);
         centerColorView = view.findViewById(R.id.result_center_color);
         rightColorView = view.findViewById(R.id.result_right_color);
-        shareButton = (Button) view.findViewById(R.id.result_share_button);
+        shareButton = (Button) view.findViewById(R.id.result_next_button);
         leftPlot = (XYPlot) view.findViewById(R.id.result_left_plot);
         rightPlot = (XYPlot) view.findViewById(R.id.result_right_plot);
 
@@ -132,20 +132,7 @@ public class ResultFragment extends Fragment {
     }
 
     private void onShare() {
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "RESULTS");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, makeShareText());
-        startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
-    }
-
-    private String makeShareText() {
-        StringBuilder sb = new StringBuilder("Original color: ");
-        sb.append(resultObj.getOriginalColor().getLABString()).append("\n");
-        for (ColorObj colorObj : resultObj.getModifiedColors()) {
-            sb.append(colorObj.getLABString()).append("\n");
-        }
-        return sb.toString();
+        UserInfoActivity.startWithResultObject(getActivity(), resultObj);
     }
 
 }
