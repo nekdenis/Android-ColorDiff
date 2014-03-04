@@ -25,10 +25,7 @@ public class ResultFragment extends Fragment {
 
     private ResultObj resultObj;
 
-    private View centerColorView;
-    private View rightColorView;
-    private TextView rightColorText;
-    private TextView centerColorText;
+    private TextView colorsText;
     private Button shareButton;
 
     private XYPlot leftPlot;
@@ -54,16 +51,12 @@ public class ResultFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result, container, false);
 
-        centerColorText = (TextView) view.findViewById(R.id.result_center_color_text);
-        rightColorText = (TextView) view.findViewById(R.id.result_right_color_text);
-        centerColorView = view.findViewById(R.id.result_center_color);
-        rightColorView = view.findViewById(R.id.result_right_color);
+        colorsText = (TextView) view.findViewById(R.id.result_text);
         shareButton = (Button) view.findViewById(R.id.result_next_button);
         leftPlot = (XYPlot) view.findViewById(R.id.result_left_plot);
         rightPlot = (XYPlot) view.findViewById(R.id.result_right_plot);
@@ -77,7 +70,7 @@ public class ResultFragment extends Fragment {
     private void initPlot() {
         List<Double> xs = new ArrayList<Double>();
         List<Double> ys = new ArrayList<Double>();
-        for(ColorObj colorObj: resultObj.getModifiedColors()){
+        for (ColorObj colorObj : resultObj.getModifiedColors()) {
             xs.add(colorObj.getA());
             ys.add(colorObj.getB());
         }
@@ -85,7 +78,7 @@ public class ResultFragment extends Fragment {
         xs.add(xs.get(0));
         ys.add(ys.get(0));
 
-        XYSeries series1 = new SimpleXYSeries(xs,ys,"");
+        XYSeries series1 = new SimpleXYSeries(xs, ys, "");
 
         LineAndPointFormatter series1Format = new LineAndPointFormatter();
         series1Format.setPointLabelFormatter(new PointLabelFormatter());
@@ -125,10 +118,16 @@ public class ResultFragment extends Fragment {
     }
 
     private void fillView() {
-        centerColorView.setBackgroundColor(resultObj.getOriginalColor().getRGBint());
-        rightColorView.setBackgroundColor(resultObj.getModifiedColors().get(0).getRGBint());
-        rightColorText.setText(resultObj.getModifiedColors().get(0).toString());
-        centerColorText.setText(resultObj.getOriginalColor().toString());
+        StringBuilder sb = new StringBuilder();
+        sb.append("Original color: ");
+        sb.append(resultObj.getOriginalColor().getLABString()).append("\n");
+
+        sb.append("Modified colors: ");
+        for (ColorObj colorObj : resultObj.getModifiedColors()) {
+            sb.append(colorObj.getLABString()).append("\n");
+        }
+
+        colorsText.setText(sb.toString());
     }
 
     private void onShare() {

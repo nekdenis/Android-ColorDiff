@@ -153,6 +153,7 @@ public class UserInfoFragment extends Fragment {
         sb.append("Original color: ");
         sb.append(resultObj.getOriginalColor().getLABString()).append("\n");
 
+        sb.append("Modified colors: ");
         for (ColorObj colorObj : resultObj.getModifiedColors()) {
             sb.append(colorObj.getLABString()).append("\n");
         }
