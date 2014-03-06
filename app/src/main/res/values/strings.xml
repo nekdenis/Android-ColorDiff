@@ -19,5 +19,7 @@
     <string name="user_info_phone_model">Phone model:</string>
     <string name="user_info_screen_brightness">Screen brightness:</string>
     <string name="user_info_finish">Finish</string>
+    <string name="chooser_select">Select</string>
+    <string name="palette_custom_color">Custom color</string>
 
 </resources>

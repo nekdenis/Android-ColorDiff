@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.github.nekdenis.fragment.ColorPalleteFragment">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.github.nekdenis.fragment.ColorPalleteFragment">
+
+    <Button
+        android:id="@+id/palette_custom_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/palette_custom_color"
+        android:layout_margin="18dp"/>
 
     <GridView
-        android:id="@android:id/list"
+        android:id="@+id/palette_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="2" />
+        android:layout_below="@id/palette_custom_button"
+        android:numColumns="2"/>
 
-    <TextView
-        android:id="@android:id/empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center" />
 
-</FrameLayout>
+</RelativeLayout>

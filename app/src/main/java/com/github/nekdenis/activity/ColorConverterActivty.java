@@ -90,12 +90,12 @@ public class ColorConverterActivty extends Activity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if (b) {
-//                    double[] lch = color.getLCH();
-//                    lch[1] = i;
-//                    color.setLCH(lch);
-                    int[] ab = convertAngleAndRadiusToAB(i * 360 / 100, verticalBar2.getProgress());
-                    color.setA(ab[0]);
-                    color.setB(ab[1]);
+                    double[] lch = color.getLCH();
+                    lch[1] = i;
+                    color.setLCH(lch);
+                    // int[] ab = convertAngleAndRadiusToAB(i * 360 / 100, verticalBar2.getProgress());
+                    //color.setA(ab[0]);
+                    //color.setB(ab[1]);
                     updatePreview();
                 }
             }
@@ -113,12 +113,12 @@ public class ColorConverterActivty extends Activity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if (b) {
-//                    double[] lch = color.getLCH();
-//                    lch[2] = i * 360 / 100;
-//                    color.setLCH(lch);
-                    int[] ab = convertAngleAndRadiusToAB(horizontalBar2.getProgress() * 360 / 100, i);
-                    color.setA(ab[0]);
-                    color.setB(ab[1]);
+                    double[] lch = color.getLCH();
+                    lch[2] = i * 360 / 100;
+                    color.setLCH(lch);
+                   // int[] ab = convertAngleAndRadiusToAB(horizontalBar2.getProgress() * 360 / 100, i);
+                    //color.setA(ab[0]);
+                   // color.setB(ab[1]);
                     updatePreview();
                 }
             }
@@ -137,8 +137,8 @@ public class ColorConverterActivty extends Activity {
         horizontalBar.setProgress((int) ((color.getA() + 120) * 100 / 240));
         verticalBar.setProgress((int) ((color.getB() + 120) * 100 / 240));
         double[] lch = color.getLCH();
-        //horizontalBar2.setProgress((int) lch[1]);
-        //verticalBar2.setProgress((int) (lch[2] * 100d / 360d));
+        horizontalBar2.setProgress((int) lch[1]);
+        verticalBar2.setProgress((int) (lch[2] * 100d / 360d));
         preview.setBackgroundColor(color.getRGBint());
         colorText.setText(color.getLABString() + "\n" + color.getLCHString());
     }
