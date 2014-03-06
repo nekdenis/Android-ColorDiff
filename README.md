@@ -17,8 +17,13 @@ After all estimations result in AB-coordinates looks like:
 
 This figure shows that user does not see any difference of colors in this region. 
 
+Choose one of predifined colors:
 ![Alt text](/img/app_scr_1.png "")
+Select custom color in three color spaces (RGB/CIE LAB/CIE LCH):
 ![Alt text](/img/app_scr_2.png "")
+Estimate your vision:
 ![Alt text](/img/app_scr_3.png "")
+See results of estimation:
 ![Alt text](/img/app_scr_4.png "")
+Send result by email or any other message service: 
 ![Alt text](/img/app_scr_5.png "")
