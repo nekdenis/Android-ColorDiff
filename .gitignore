@@ -27,3 +27,4 @@ local.properties
 proguard/
 
 .idea/
+.DS_Store
