@@ -7,7 +7,7 @@
 
     <View
         android:id="@+id/color_chooser_preview"
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginLeft="8dp"
         android:layout_alignParentRight="true"
@@ -18,21 +18,21 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/color_chooser_preview"
-        android:textSize="20dp"/>
+        android:textSize="17dp"/>
     <EditText
         android:id="@+id/color_chooser_lab_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/color_chooser_preview"
         android:layout_below="@id/color_chooser_rgb_text"
-        android:textSize="20dp"/>
+        android:textSize="17dp"/>
     <EditText
         android:id="@+id/color_chooser_lch_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/color_chooser_lab_text"
         android:layout_toLeftOf="@id/color_chooser_preview"
-        android:textSize="20dp"/>
+        android:textSize="17dp"/>
     <RadioGroup
         android:id="@+id/color_chooser_radio"
         android:layout_width="match_parent"
