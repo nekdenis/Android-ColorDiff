@@ -5,7 +5,7 @@ Tool for analyzing human's vision color recognizing.
 
 This application is part of my laboratory research at Lappeenranta University of Technology. 
 
-[Download App](/downloads/ColorDiff.apk)
+[Download App](https://github.com/nekdenis/Android-ColorDiff/releases/download/0.5/ColorDiff.apk)
 
 User selects color and then he should estimate 10 steps with a little bit different colors. User increase difference value until the color starts to change in user's vision. After this user gets next step. 
 
