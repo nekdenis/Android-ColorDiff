@@ -5,6 +5,8 @@ Tool for analyzing human's vision color recognizing.
 
 This application is part of my laboratory research at Lappeenranta University of Technology. 
 
+[Download App](/downloads/ColorDiff.apk)
+
 User selects color and then he should estimate 10 steps with a little bit different colors. User increase difference value until the color starts to change in user's vision. After this user gets next step. 
 
 Color changed from step to step by modifying angle between point in AB-coordinates and than user selects suitable color by changing radius:
